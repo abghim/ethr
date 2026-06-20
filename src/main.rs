@@ -125,7 +125,6 @@ static BASH: &str = r#"
 [[ -n ${ETHR_BG+x} ]] || echo "Please set environment variable ETHR_BG to your terminal background color."
 [[ -n ${ETHR_SUCCESS+x} ]] || export ETHR_SUCCESS="467159"
 [[ -n ${ETHR_FAIL+x} ]] || export ETHR_FAIL="A04C62"
-BG="${ETHR_BG}"
 PROMPT_COLOR="${ETHR_SUCCESS}"
 
 _prompt_phaser() {
@@ -134,7 +133,8 @@ _prompt_phaser() {
 
 _prompt_command() {
 	local exit_code=$?
-	_ETHR_IN_PROMPT=1
+	[[ -n ${ETHR_BG+x} ]] || echo "Please set environment variable ETHR_BG to your terminal background color."
+	local bg="${ETHR_BG-}"
 	(( exit_code == 0 )) && PROMPT_COLOR="${ETHR_SUCCESS}" || PROMPT_COLOR="${ETHR_FAIL}"
 	local pth=$(pwd)
 	local sliced="${pth##*/}"
@@ -146,59 +146,11 @@ _prompt_command() {
 		local len=11
 	fi
 	local prompt_prefix='\[\e[48;2;20;25;31m\]'
-	PS1="${prompt_prefix}\W ✨ $(_prompt_phaser "$BG" "$PROMPT_COLOR" $(( 13 - len )) ' ')$(_prompt_phaser "$PROMPT_COLOR" "$BG" 1 ' ') "
-	_ETHR_AT_PROMPT=1
-	_ETHR_IN_PROMPT=0
+	PS1="${prompt_prefix}\W ✨ $(_prompt_phaser "$bg" "$PROMPT_COLOR" $(( 13 - len )) ' ')$(_prompt_phaser "$PROMPT_COLOR" "$bg" 1 ' ') "
 	return $exit_code
 }
 
-_prompt() {
-	local command=$1
-	local emoji="✅"
-	command="${command#"${command%%[![:space:]]*}"}"
-	local cmd=${command%%[[:space:]]*}
-	case $cmd in
-		cd | ls | pwd | mkdir | mv) emoji="📂" ;;
-		vi | nano | vim | emacs | hx) emoji="✏️" ;;
-		clang | make | 'clang++') emoji="🛠️";;
-		python | py | python3) emoji="🐍";;
-		brew) emoji="🍺";;
-		rm | trash) emoji="🔥";;
-		git) emoji="🔶";;
-		sudo) emoji="🔑";;
-		awk | sed | grep | egrep) emoji="🔍";;
-		ftp | sftp | ssh | ping | nc) emoji="🌐";;
-		cat | more | less) emoji="📚";;
-		touch) emoji="✋";;
-		rustc | cargo | rustfmt) emoji="🦀";;
-		lldb) emoji="🔧";;
-		echo) emoji="📢";;
-		bash | sh | ksh | csh | tcsh | zsh | fish) emoji="🐚";;
-		*) emoji="✅";;
-	esac
-	local pth=$(pwd)
-	local sliced="${pth##*/}"
-	local len=${#sliced}
-	if [[ $pth == $HOME ]]; then
-		local len=1
-	fi
-	printf "\e[?25l\e[s\e[1A\e[$(( len + 2 ))G$emoji \e[u\e[?25h"
-}
-
-_prompt_preexec() {
-	[[ ${_ETHR_IN_PROMPT:-0} == 1 ]] && return
-	[[ ${_ETHR_AT_PROMPT:-0} == 1 ]] || return
-	local command=$BASH_COMMAND
-	[[ -n ${command//[[:space:]]/} ]] || return
-	case $command in
-		_prompt_command | _prompt_preexec | _prompt_preexec\ * | _prompt | _prompt\ *) return ;;
-	esac
-	_ETHR_AT_PROMPT=0
-	_prompt "$command"
-}
-
 PROMPT_COMMAND=_prompt_command
-trap _prompt_preexec DEBUG
 "#;
 
 static FISH: &str = r#"
@@ -212,6 +164,7 @@ end
 
 function fish_prompt
 	set -l exit_code $status
+	set -q ETHR_BG; or echo "Please set environment variable ETHR_BG to your terminal background color."
 	set -l prompt_color $ETHR_SUCCESS
 	if test $exit_code -ne 0
 		set prompt_color $ETHR_FAIL
