@@ -1,7 +1,14 @@
 [package]
 name = "ethr"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2024"
+description = "Ethereal shell prompts. Pragmatic meets aesthetic."
+license = "WTFPL"
+repository = "https://github.com/abghim/ethr"
+readme = "README.md"
+keywords = ["shell", "prompt", "emoji", "zsh"]
+categories = ["command-line-utilities"]
+exclude = ["target/**"]
 
 [dependencies]
 clap = { version = "4.6.1", features = ["derive"] }
