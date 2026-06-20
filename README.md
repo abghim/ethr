@@ -1,12 +1,41 @@
-# shellmoji -- Prettify Your Bash Shell With Dynamic Emojis
-`shellmoji` is a bash extension script that adds a small but impactful beauty in your prompt. The shell responds to each of your commands with a lively emoji, all while fitting seamlessly into your command line workflow. Append the attached script to your .bashrc file in your home directory to unlock an interactive pleasure you never knew you always wanted.
+# Ethr
+Ethereal shell prompts. Practical meets stunning.
 
-**Note:** To ensure .bashrc runs only on interactive shell (and not on shell scripts), please add the following snippet to the head of your .bashrc. Most distributions of Linux does this by default. For Mac users or those without a default config file, adding this will be necessary to prevent malfunction.
+## Install
+### Download binary
+Install via cargo:
+```zsh
+cargo install ethr
+```
 
+### Setup
+For zsh (extensively tested):
+```zsh
+# add to .zshrc
+eval "$(ethr init zsh)"
 ```
-# If not running interactively, don't do anything
-case $- in
-   *i*) ;;
-    *) return;;
-esac
+
+For bash:
+```bash
+eval "$(ethr init bash)"
 ```
+
+For fish:
+```fish
+eval "$(ethr init fish)"
+```
+
+### Configure (Important)
+```
+export ETHR_BG="14191f" # terminal bg color, required
+export ETHR_SUCCESS="467159" # command success color
+export ETHR_FAIL="A04C62" # command success color
+```
+
+## Features
+### Gradient prompt padding.
+
+### Command status.
+
+### Consistent prompt width.
+
