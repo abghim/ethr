@@ -59,4 +59,4 @@ export ETHR_FAIL="A04C62" # command failure color
 This feature is not available in bash.
 
 ### Consistent prompt width.
-<img width="766" height="481" alt="image" src="https://github.com/user-attachments/assets/e69e8580-ea5e-4396-9076-62aef1e80b6e" />
+<img  height="400" alt="image" src="https://github.com/user-attachments/assets/e69e8580-ea5e-4396-9076-62aef1e80b6e" />
