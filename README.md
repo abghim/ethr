@@ -43,13 +43,20 @@ eval "$(ethr init fish)"
 ```
 export ETHR_BG="14191f" # terminal bg color, required
 export ETHR_SUCCESS="467159" # command success color
-export ETHR_FAIL="A04C62" # command success color
+export ETHR_FAIL="A04C62" # command failure color
 ```
 
 ## Features
 ### Gradient prompt padding.
+<img  height="400" alt="image" src="https://github.com/user-attachments/assets/19473d9c-3c76-4e59-aea3-37a0d138a74f" />
 
 ### Command status.
+<img height="400" alt="image" src="https://github.com/user-attachments/assets/226d470c-3f7c-4360-860e-35e889932ce4" />
+
+### Dynamic emojis.
+<img height="400" alt="image" src="https://github.com/user-attachments/assets/6a0acb5b-f5cd-425e-9ca2-6674f354121c" />
+
+This feature is not available in bash.
 
 ### Consistent prompt width.
-
+<img width="766" height="481" alt="image" src="https://github.com/user-attachments/assets/e69e8580-ea5e-4396-9076-62aef1e80b6e" />
